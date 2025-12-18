@@ -173,7 +173,7 @@
 
     <section>
       <h2>Authorization</h2>
-      <p class="help">For the username, use <b>API</b> and for password, use your <b>API key</b>. You can find this on your ActiveProspect account settings page.</p>
+      <p class="help">For the username, use <b>API</b> and for password, use your <b>API key</b>. You can find this on your <a href="https://account.activeprospect.com/settings" target="_blank">ActiveProspect settings page</a>.</p>
     </section>
 
     <section>
@@ -192,7 +192,23 @@
       <input type="text" id="matchPhone" placeholder="+15555551234" />
     </section>
 
-    <!-- Insights, Verify, Retain sections remain functional -->
+    <section>
+      <h2>Insights</h2>
+      <p class="help">Select the insights you want to request. Only selected properties will be included in the curl request.</p>
+      <!-- Insights checkboxes here -->
+    </section>
+
+    <section>
+      <h2>Verify</h2>
+      <p class="help">Verify must be configured in the UI to accept leads from the vendor. Fill in any fields you want to include.</p>
+      <!-- Verify inputs here -->
+    </section>
+
+    <section>
+      <h2>Retain Metadata</h2>
+      <p class="help">Store additional metadata on your certificate. Retention only occurs if a match_lead is provided.</p>
+      <!-- Retain inputs here -->
+    </section>
 
     <section>
       <h2>Generated curl request</h2>
