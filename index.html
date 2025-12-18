@@ -4,231 +4,95 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TrustedForm Curl Request Builder</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #3B82F6; /* Lighter AP blue */
-      --card: #FFFFFF;
-      --text: #1F2937;
-      --muted: #6B7280;
-      --border: #E5E7EB;
-      --accent: #2563EB;
-      --primary: #FFFFFF;
-      --primary-hover: #BFDBFE;
-      --dark-code-bg: #1E293B;
-      --dark-code-text: #F8FAFC;
-      --shadow: rgba(0,0,0,0.1);
-    }
-
     body {
-      margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #3B82F6;
+      color: #1F2937;
+      padding: 20px;
     }
-
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 32px;
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 8px 20px var(--shadow);
-      text-align: left;
+    .section {
+      background-color: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
     }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 8px;
-      text-align: center;
-      color: var(--primary);
-    }
-
-    .subtitle {
-      color: var(--primary);
-      margin-bottom: 32px;
-      text-align: center;
-      font-weight: 500;
-    }
-
-    section {
-      border-top: 1px solid var(--border);
-      padding-top: 24px;
-      margin-top: 32px;
-    }
-
-    section:first-of-type {
-      border-top: none;
-      padding-top: 0;
-      margin-top: 0;
-    }
-
     h2 {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      color: var(--accent);
-    }
-
-    p.help {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 12px;
-    }
-
-    label {
-      font-size: 0.95rem;
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
-
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      font-size: 0.95rem;
-    }
-
-    textarea {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      min-height: 220px;
-      background: var(--dark-code-bg);
-      color: var(--dark-code-text);
-      border-radius: 6px;
-      padding: 12px;
-      resize: vertical;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .checkbox {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .nested {
-      margin-left: 20px;
-      padding-left: 16px;
-      border-left: 2px solid var(--border);
-      margin-top: 8px;
-    }
-
-    .code-actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    button {
-      background: var(--accent);
-      color: var(--primary);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-
-    button:hover {
-      background: #1D4ED8;
-    }
-
-    button.secondary {
-      background: #EFF6FF;
       color: #2563EB;
     }
-
-    .warning {
-      background: #FEF3C7;
-      border: 1px solid #FBBF24;
-      color: #92400E;
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      margin-top: 12px;
+    label {
+      display: block;
+      margin-top: 10px;
     }
-
-    footer {
-      margin-top: 32px;
-      font-size: 0.85rem;
-      color: var(--muted);
-      text-align: center;
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    textarea {
+      height: 150px;
+      font-family: monospace;
+      background-color: #1E293B;
+      color: #F8FAFC;
+    }
+    .help {
+      font-size: 0.9em;
+      color: #6B7280;
+    }
+    a {
+      color: #2563EB;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>TrustedForm Curl Request Builder</h1>
-    <div class="subtitle">Select the TrustedForm features you use and generate a ready-to-run curl example.</div>
 
-    <section>
-      <h2>Authorization</h2>
-      <p class="help">For the username, use <b>API</b> and for password, use your <b>API key</b>. You can find this on your <a href="https://account.activeprospect.com/settings" target="_blank">ActiveProspect settings page</a>.</p>
-    </section>
-
-    <section>
-      <h2>Certificate</h2>
-      <p class="help">This is the unique code at the end of the certificate URL: <code>https://cert.trustedform.com/{cert_id}</code></p>
-      <label>Certificate ID</label>
-      <input type="text" id="certId" placeholder="{cert_id}" />
-    </section>
-
-    <section>
-      <h2>Match Lead</h2>
-      <p class="help"><b>Required to retain:</b> Enter the email or phone number to match the certificate to a specific lead.</p>
-      <label>Email</label>
-      <input type="text" id="matchEmail" placeholder="janedoe@gmail.com" />
-      <label>Phone</label>
-      <input type="text" id="matchPhone" placeholder="+15555551234" />
-    </section>
-
-    <section>
-      <h2>Insights</h2>
-      <p class="help">Select the insights you want to request. Only selected properties will be included in the curl request.</p>
-      <!-- Insights checkboxes here -->
-    </section>
-
-    <section>
-      <h2>Verify</h2>
-      <p class="help">Verify must be configured in the UI to accept leads from the vendor. Fill in any fields you want to include.</p>
-      <!-- Verify inputs here -->
-    </section>
-
-    <section>
-      <h2>Retain Metadata</h2>
-      <p class="help">Store additional metadata on your certificate. Retention only occurs if a match_lead is provided.</p>
-      <!-- Retain inputs here -->
-    </section>
-
-    <section>
-      <h2>Generated curl request</h2>
-      <div class="code-actions">
-        <span></span>
-        <button class="secondary" onclick="copyCurl()">Copy</button>
-      </div>
-      <textarea id="curlOutput" readonly></textarea>
-      <div id="retainWarning" class="warning" style="display:none;">
-        Retain metadata is set, but no match_lead was provided. Retention will not occur without a match.
-      </div>
-    </section>
-
-    <footer>
-      TrustedForm API v4 • Example requests only
-    </footer>
+  <div class="section">
+    <h2>Authorization</h2>
+    <p class="help">For the username, use <b>API</b> and for password, use your <b>API key</b>. You can find this on your <a href="https://account.activeprospect.com/settings" target="_blank">ActiveProspect settings page</a>.</p>
   </div>
 
-  <script>
-    // Existing JS code remains unchanged
-  </script>
+  <div class="section">
+    <h2>Certificate</h2>
+    <p class="help">This is the unique code at the end of the certificate URL: <code>https://cert.trustedform.com/{cert_id}</code></p>
+    <label>Certificate ID</label>
+    <input type="text" id="certId" placeholder="{cert_id}" />
+  </div>
+
+  <div class="section">
+    <h2>Match Lead</h2>
+    <p class="help"><b>Required to retain:</b> Enter the email or phone number to match the certificate to a specific lead.</p>
+    <label>Email</label>
+    <input type="text" id="matchEmail" placeholder="janedoe@gmail.com" />
+    <label>Phone</label>
+    <input type="text" id="matchPhone" placeholder="+15555551234" />
+  </div>
+
+  <div class="section">
+    <h2>Insights</h2>
+    <p class="help">Select the insights you want to request. Only selected properties will be included in the curl request.</p>
+    <!-- Insights checkboxes here -->
+  </div>
+
+  <div class="section">
+    <h2>Verify</h2>
+    <p class="help">Verify must be configured in the UI to accept leads from the vendor. Fill in any fields you want to include.</p>
+    <!-- Verify inputs here -->
+  </div>
+
+  <div class="section">
+    <h2>Retain Metadata</h2>
+    <p class="help">Store additional metadata on your certificate. Retention only occurs if a match_lead is provided.</p>
+    <!-- Retain inputs here -->
+  </div>
+
+  <div class="section">
+    <h2>Generated curl request</h2>
+    <textarea id="curlOutput" readonly></textarea>
+  </div>
+
 </body>
 </html>
