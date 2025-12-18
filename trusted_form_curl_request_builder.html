@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TrustedForm Curl Request Builder</title>
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 24px;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    section {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      margin-top: 28px;
+    }
+
+    section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    p.help {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      min-height: 220px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .nested {
+      margin-left: 20px;
+      padding-left: 16px;
+      border-left: 2px solid var(--border);
+      margin-top: 8px;
+    }
+
+    .code-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    button.secondary {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .warning {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+
+    footer {
+      margin-top: 32px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TrustedForm Curl Request Builder</h1>
+    <div class="subtitle">Select the TrustedForm features you use and generate a ready-to-run curl example.</div>
+
+    <section>
+      <h2>Certificate</h2>
+      <label>Certificate ID</label>
+      <input type="text" id="certId" placeholder="{cert_id}" />
+    </section>
+
+    <section>
+      <h2>Match Lead <span class="muted">(required to retain)</span></h2>
+      <p class="help">Used to match a certificate to a specific lead by email or phone. This is required for retention but not for Insights or Verify.</p>
+      <div class="row">
+        <div>
+          <label>Email</label>
+          <input type="text" id="matchEmail" placeholder="janedoe@gmail.com" />
+        </div>
+        <div>
+          <label>Phone</label>
+          <input type="text" id="matchPhone" placeholder="+15555551234" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Insights (optional)</h2>
+      <p class="help">Request only the insights you are contracted to receive. Insights requests do not retain certificates.</p>
+
+      <div class="checkbox"><input type="checkbox" class="insight" value="age_seconds"> Age of the lead</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="approx_ip_geo"> Geo location</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="browser"> Browser used</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="created_at"> Lead created at</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="seconds_on_page"> Time spent filling out the form</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="expires_at"> Certificate expiration time</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="ip"> Originating IP address</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="os"> Operating system</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="page_url"> Originating page URL</div>
+      <div class="checkbox"><input type="checkbox" class="insight" value="bot_detected"> Bot detected</div>
+
+      <div class="nested">
+        <div class="checkbox"><input type="checkbox" id="enableScans"> Enable page scan</div>
+        <div class="row">
+          <div>
+            <label>Forbidden terms (comma-separated)</label>
+            <input type="text" id="scanForbidden" placeholder="free, ipad" />
+          </div>
+          <div>
+            <label>Required terms (comma-separated)</label>
+            <input type="text" id="scanRequired" placeholder="home security system" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Verify (optional)</h2>
+      <p class="help">Verify must be configured in the UI to accept leads from the vendor. All parameters are optional.</p>
+      <div class="row">
+        <div>
+          <label>Advertiser name</label>
+          <input type="text" id="advertiserName" placeholder="Acme Inc." />
+        </div>
+        <div>
+          <label>Minimum font size (px)</label>
+          <input type="text" id="minFont" placeholder="16" />
+        </div>
+        <div>
+          <label>Minimum contrast ratio</label>
+          <input type="text" id="minContrast" placeholder="7" />
+        </div>
+        <div>
+          <label>Allowed opt-in types (comma-separated)</label>
+          <input type="text" id="optInTypes" placeholder="manual, pre-selected" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Retain Metadata (optional)</h2>
+      <p class="help">Optional metadata stored on your copy of the certificate. Retention only occurs when a match_lead is provided.</p>
+      <div class="row">
+        <div>
+          <label>Reference</label>
+          <input type="text" id="retainReference" placeholder="Lead ID or URL" />
+        </div>
+        <div>
+          <label>Vendor</label>
+          <input type="text" id="retainVendor" placeholder="Acme Co." />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Generated curl request</h2>
+      <div class="code-actions">
+        <span></span>
+        <button class="secondary" onclick="copyCurl()">Copy</button>
+      </div>
+      <textarea id="curlOutput" readonly></textarea>
+      <div id="retainWarning" class="warning" style="display:none;">
+        Retain metadata is set, but no match_lead was provided. Retention will not occur without a match.
+      </div>
+    </section>
+
+    <footer>
+      TrustedForm API v4 • Example requests only
+    </footer>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(i => i.addEventListener('input', buildCurl));
+    document.querySelectorAll('.insight').forEach(i => i.addEventListener('change', buildCurl));
+    document.getElementById('enableScans').addEventListener('change', buildCurl);
+
+    function buildCurl() {
+      const certId = document.getElementById('certId').value || '{cert_id}';
+
+      const body = {};
+
+      const email = document.getElementById('matchEmail').value;
+      const phone = document.getElementById('matchPhone').value;
+
+      if (email || phone) {
+        body.match_lead = {};
+        if (email) body.match_lead.email = email;
+        if (phone) body.match_lead.phone = phone;
+      }
+
+      const insights = Array.from(document.querySelectorAll('.insight:checked')).map(i => i.value);
+      if (insights.length) {
+        body.insights = { properties: insights };
+
+        if (document.getElementById('enableScans').checked) {
+          const forbidden = document.getElementById('scanForbidden').value.split(',').map(s => s.trim()).filter(Boolean);
+          const required = document.getElementById('scanRequired').value.split(',').map(s => s.trim()).filter(Boolean);
+          if (forbidden.length || required.length) {
+            body.insights.scans = {};
+            if (forbidden.length) body.insights.scans.forbidden = forbidden;
+            if (required.length) body.insights.scans.required = required;
+          }
+        }
+      }
+
+      const verify = {};
+      if (document.getElementById('advertiserName').value) verify.advertiser_name = document.getElementById('advertiserName').value;
+      if (document.getElementById('minFont').value) verify.min_font_size_px_required = Number(document.getElementById('minFont').value);
+      if (document.getElementById('minContrast').value) verify.min_contrast_ratio_required = Number(document.getElementById('minContrast').value);
+      if (document.getElementById('optInTypes').value) verify.opt_in_types_allowed = document.getElementById('optInTypes').value.split(',').map(s => s.trim()).filter(Boolean);
+      if (Object.keys(verify).length) body.verify = verify;
+
+      const retain = {};
+      if (document.getElementById('retainReference').value) retain.reference = document.getElementById('retainReference').value;
+      if (document.getElementById('retainVendor').value) retain.vendor = document.getElementById('retainVendor').value;
+      if (Object.keys(retain).length) body.retain = retain;
+
+      document.getElementById('retainWarning').style.display = body.retain && !body.match_lead ? 'block' : 'none';
+
+      const curl = `curl -i -X POST \\\n  -u <username>:<password> \\\n  'https://cert.trustedform.com/${certId}' \\\n  -H 'Api-Version: 4.0' \\\n  -H 'Content-Type: application/json' \\\n  -d '${JSON.stringify(body, null, 2)}'`;
+
+      document.getElementById('curlOutput').value = curl;
+    }
+
+    function copyCurl() {
+      const el = document.getElementById('curlOutput');
+      el.select();
+      document.execCommand('copy');
+    }
+
+    buildCurl();
+  </script>
+</body>
+</html>
