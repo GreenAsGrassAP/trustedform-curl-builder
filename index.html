@@ -10,16 +10,17 @@
       --bg: #2563EB; /* TrustedForm blue */
       --card: #FFFFFF;
       --text: #1F2937;
-      --muted: #F3F4F6;
+      --muted: #6B7280;
       --border: #E5E7EB;
       --primary: #FFFFFF;
       --primary-hover: #E0F2FE;
-      --accent-soft: #EFF6FF;
+      --accent: #3B82F6;
       --warning-bg: #FFF7ED;
       --warning-border: #FED7AA;
       --warning-text: #9A3412;
       --dark-code-bg: #1E293B;
       --dark-code-text: #F8FAFC;
+      --shadow: rgba(0,0,0,0.12);
     }
 
     body {
@@ -27,22 +28,27 @@
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.6;
       text-align: center;
     }
 
     .container {
       max-width: 900px;
       margin: 40px auto;
-      padding: 32px;
+      padding: 40px;
       background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      box-shadow: 0 16px 40px var(--shadow);
       text-align: left;
+      transition: transform 0.2s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-2px);
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin-bottom: 8px;
       text-align: center;
       color: var(--primary);
@@ -50,14 +56,15 @@
 
     .subtitle {
       color: var(--primary);
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       text-align: center;
+      font-weight: 500;
     }
 
     section {
       border-top: 1px solid var(--border);
-      padding-top: 24px;
-      margin-top: 32px;
+      padding-top: 28px;
+      margin-top: 36px;
     }
 
     section:first-of-type {
@@ -67,59 +74,68 @@
     }
 
     h2 {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      color: var(--primary);
+      font-size: 1.6rem;
+      margin-bottom: 14px;
+      color: var(--accent);
     }
 
     p.help {
       color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 12px;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
     }
 
     label {
-      font-size: 0.95rem;
+      font-size: 1rem;
       display: block;
       margin-bottom: 6px;
+      font-weight: 500;
     }
 
     input[type="text"], textarea {
       width: 100%;
-      padding: 10px 14px;
-      border-radius: 6px;
+      padding: 12px 16px;
+      border-radius: 10px;
       border: 1px solid var(--border);
       font-size: 0.95rem;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 8px rgba(59,130,246,0.3);
     }
 
     textarea {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      min-height: 220px;
+      min-height: 240px;
       background: var(--dark-code-bg);
       color: var(--dark-code-text);
-      border-radius: 6px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 16px;
       resize: vertical;
+      font-size: 0.9rem;
     }
 
     .row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
+      grid-template-columns: 1fr;
+      gap: 20px;
     }
 
     .checkbox {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
     .nested {
       margin-left: 20px;
       padding-left: 16px;
-      border-left: 2px solid var(--border);
-      margin-top: 8px;
+      border-left: 3px solid var(--border);
+      margin-top: 12px;
     }
 
     .code-actions {
@@ -130,37 +146,38 @@
     }
 
     button {
-      background: var(--primary);
-      color: var(--bg);
+      background: var(--accent);
+      color: var(--primary);
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: 10px 18px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 0.95rem;
+      font-weight: 500;
       transition: background 0.2s;
     }
 
     button:hover {
-      background: var(--primary-hover);
+      background: #1D4ED8;
     }
 
     button.secondary {
-      background: var(--accent-soft);
-      color: var(--primary);
+      background: #EFF6FF;
+      color: #2563EB;
     }
 
     .warning {
       background: var(--warning-bg);
       border: 1px solid var(--warning-border);
       color: var(--warning-text);
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      margin-top: 12px;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin-top: 16px;
     }
 
     footer {
-      margin-top: 32px;
+      margin-top: 40px;
       font-size: 0.85rem;
       color: var(--muted);
       text-align: center;
@@ -172,7 +189,28 @@
     <h1>TrustedForm Curl Request Builder</h1>
     <div class="subtitle">Select the TrustedForm features you use and generate a ready-to-run curl example.</div>
 
-    <!-- All other sections remain unchanged -->
+    <section>
+      <h2>Authorization</h2>
+      <p class="help">For the username, use <b>API</b> and for password, use your <b>API key</b>. You can find this on your ActiveProspect account settings page.</p>
+    </section>
+
+    <section>
+      <h2>Certificate</h2>
+      <p class="help">This is the unique code at the end of the certificate URL: <code>https://cert.trustedform.com/{cert_id}</code></p>
+      <label>Certificate ID</label>
+      <input type="text" id="certId" placeholder="{cert_id}" />
+    </section>
+
+    <section>
+      <h2>Match Lead</h2>
+      <p class="help"><b>Required to retain:</b> Enter the email or phone number to match the certificate to a specific lead.</p>
+      <label>Email</label>
+      <input type="text" id="matchEmail" placeholder="janedoe@gmail.com" />
+      <label>Phone</label>
+      <input type="text" id="matchPhone" placeholder="+15555551234" />
+    </section>
+
+    <!-- Insights, Verify, Retain sections remain -->
 
     <section>
       <h2>Generated curl request</h2>
