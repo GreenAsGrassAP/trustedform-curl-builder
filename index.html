@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #3B82F6;
+      background-color: #60A5FA; /* light AP blue */
       color: #1F2937;
       padding: 20px;
     }
@@ -24,7 +24,7 @@
       display: block;
       margin-top: 10px;
     }
-    input, textarea {
+    input[type="text"], textarea {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
@@ -41,6 +41,23 @@
     .help {
       font-size: 0.9em;
       color: #6B7280;
+    }
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    button {
+      background: #2563EB;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1D4ED8;
     }
     a {
       color: #2563EB;
@@ -74,19 +91,35 @@
   <div class="section">
     <h2>Insights</h2>
     <p class="help">Select the insights you want to request. Only selected properties will be included in the curl request.</p>
-    <!-- Insights checkboxes go here -->
+    <div class="checkbox"><input type="checkbox" id="insight_age" /> <label for="insight_age">Age (age_seconds)</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_geo" /> <label for="insight_geo">Geo location (approx_ip_geo)</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_browser" /> <label for="insight_browser">Browser</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_created" /> <label for="insight_created">Created At</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_seconds" /> <label for="insight_seconds">Seconds on Page</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_expires" /> <label for="insight_expires">Expires At</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_ip" /> <label for="insight_ip">IP</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_os" /> <label for="insight_os">Operating System</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_page" /> <label for="insight_page">Page URL</label></div>
   </div>
 
   <div class="section">
     <h2>Verify</h2>
     <p class="help">Verify must be configured in the UI to accept leads from the vendor. Fill in any fields you want to include.</p>
-    <!-- Verify inputs go here -->
+    <label>Advertiser Name</label>
+    <input type="text" id="verify_advertiser" placeholder="Acme Inc." />
+    <label>Min Contrast Ratio</label>
+    <input type="text" id="verify_contrast" placeholder="7" />
+    <label>Min Font Size</label>
+    <input type="text" id="verify_font" placeholder="16" />
   </div>
 
   <div class="section">
     <h2>Retain Metadata</h2>
     <p class="help">Store additional metadata on your certificate. Retention only occurs if a match_lead is provided.</p>
-    <!-- Retain inputs go here -->
+    <label>Reference</label>
+    <input type="text" id="retain_reference" placeholder="Unique lead ID or URL" />
+    <label>Vendor</label>
+    <input type="text" id="retain_vendor" placeholder="Acme Co." />
   </div>
 
   <div class="section">
