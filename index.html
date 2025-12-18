@@ -1,131 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TrustedForm Curl Request Builder</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #60A5FA; /* light AP blue */
-      color: #1F2937;
-      padding: 20px;
-    }
-    .section {
-      background-color: #fff;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 5px;
-    }
-    h2 {
-      color: #2563EB;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-    textarea {
-      height: 150px;
-      font-family: monospace;
-      background-color: #1E293B;
-      color: #F8FAFC;
-    }
-    .help {
-      font-size: 0.9em;
-      color: #6B7280;
-    }
-    .checkbox {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    button {
-      background: #2563EB;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1D4ED8;
-    }
-    a {
-      color: #2563EB;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrustedForm Curl Request Builder</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background-color: #60A5FA;
+color: #1F2937;
+padding: 20px;
+}
+.section {
+background-color: #fff;
+padding: 15px;
+margin-bottom: 20px;
+border-radius: 5px;
+}
+h2 {
+color: #2563EB;
+}
+label {
+display: block;
+margin-top: 10px;
+}
+input[type="text"], textarea {
+width: 100%;
+padding: 8px;
+margin-top: 5px;
+margin-bottom: 10px;
+border-radius: 4px;
+border: 1px solid #ccc;
+}
+textarea {
+height: 150px;
+font-family: monospace;
+background-color: #1E293B;
+color: #F8FAFC;
+}
+.help {
+font-size: 0.9em;
+color: #6B7280;
+}
+.checkbox {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-bottom: 8px;
+}
+button {
+background: #2563EB;
+color: #fff;
+border: none;
+padding: 8px 16px;
+border-radius: 6px;
+cursor: pointer;
+}
+button:hover {
+background: #1D4ED8;
+}
+a {
+color: #2563EB;
+text-decoration: none;
+}
+</style>
 </head>
 <body>
 
-  <div class="section">
-    <h2>Authorization</h2>
-    <p class="help">For the username, use <b>API</b> and for password, use your <b>API key</b>. You can find this on your <a href="https://account.activeprospect.com/settings" target="_blank">ActiveProspect settings page</a>.</p>
-  </div>
 
-  <div class="section">
-    <h2>Certificate</h2>
-    <p class="help">This is the unique code at the end of the certificate URL: <code>https://cert.trustedform.com/{cert_id}</code></p>
-    <label>Certificate ID</label>
-    <input type="text" id="certId" placeholder="{cert_id}" />
-  </div>
+<div class="section">
+<h2>Authorization</h2>
+<p class="help">For the username, use <b>API</b> and for password, use your <b>API key</b>. You can find this on your <a href="https://account.activeprospect.com/settings" target="_blank">ActiveProspect settings page</a>.</p>
+</div>
 
-  <div class="section">
-    <h2>Match Lead</h2>
-    <p class="help"><b>Required to retain:</b> Enter the email or phone number to match the certificate to a specific lead.</p>
-    <label>Email</label>
-    <input type="text" id="matchEmail" placeholder="janedoe@gmail.com" />
-    <label>Phone</label>
-    <input type="text" id="matchPhone" placeholder="+15555551234" />
-  </div>
 
-  <div class="section">
-    <h2>Insights</h2>
-    <p class="help">Select the insights you want to request. Only selected properties will be included in the curl request.</p>
-    <div class="checkbox"><input type="checkbox" id="insight_age" /> <label for="insight_age">Age (age_seconds)</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_geo" /> <label for="insight_geo">Geo location (approx_ip_geo)</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_browser" /> <label for="insight_browser">Browser</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_created" /> <label for="insight_created">Created At</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_seconds" /> <label for="insight_seconds">Seconds on Page</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_expires" /> <label for="insight_expires">Expires At</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_ip" /> <label for="insight_ip">IP</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_os" /> <label for="insight_os">Operating System</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_page" /> <label for="insight_page">Page URL</label></div>
-  </div>
+<div class="section">
+<h2>Certificate</h2>
+<p class="help">This is the unique code at the end of the certificate URL: <code>https://cert.trustedform.com/{cert_id}</code></p>
+<label>Certificate ID</label>
+<input type="text" id="certId" placeholder="{cert_id}" />
+</div>
 
-  <div class="section">
-    <h2>Verify</h2>
-    <p class="help">Verify must be configured in the UI to accept leads from the vendor. Fill in any fields you want to include.</p>
-    <label>Advertiser Name</label>
-    <input type="text" id="verify_advertiser" placeholder="Acme Inc." />
-    <label>Min Contrast Ratio</label>
-    <input type="text" id="verify_contrast" placeholder="7" />
-    <label>Min Font Size</label>
-    <input type="text" id="verify_font" placeholder="16" />
-  </div>
 
-  <div class="section">
-    <h2>Retain Metadata</h2>
-    <p class="help">Store additional metadata on your certificate. Retention only occurs if a match_lead is provided.</p>
-    <label>Reference</label>
-    <input type="text" id="retain_reference" placeholder="Unique lead ID or URL" />
-    <label>Vendor</label>
-    <input type="text" id="retain_vendor" placeholder="Acme Co." />
-  </div>
+<div class="section">
+<h2>Match Lead</h2>
+<p class="help"><b>Required to retain:</b> Enter the email or phone number to match the certificate to a specific lead.</p>
+<label>Email</label>
+<input type="text" id="matchEmail" placeholder="janedoe@gmail.com" />
+<label>Phone</label>
+<input type="text" id="matchPhone" placeholder="+15555551234" />
+</div>
 
-  <div class="section">
-    <h2>Generated curl request</h2>
-    <textarea id="curlOutput" readonly></textarea>
-  </div>
 
-</body>
+<div class="section">
+<h2>Insights</h2>
+<p class="help">Select the insights you want to request. Only selected properties will be included in the curl request.</p>
+<div class="checkbox"><input type="checkbox" id="insight_age" /> <label for="insight_age">Age (age_seconds)</label></div>
+<div class="checkbox"><input type="checkbox" id="insight_geo" /> <label for="insight_geo">Geo location (approx_ip_geo)</label></div>
+<div class="checkbox"><input type="checkbox" id="insight_browser" /> <label for="insight_browser">Browser</label></div>
 </html>
