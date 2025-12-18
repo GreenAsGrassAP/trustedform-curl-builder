@@ -142,6 +142,7 @@
     <div class="checkbox"><input type="checkbox" id="insight_ip" /> <label for="insight_ip">IP</label></div>
     <div class="checkbox"><input type="checkbox" id="insight_os" /> <label for="insight_os">Operating System</label></div>
     <div class="checkbox"><input type="checkbox" id="insight_page" /> <label for="insight_page">Page URL</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_bot" /> <label for="insight_bot">Bot Detected (bot_detected)</label></div>
   </div>
 
   <div class="section">
@@ -188,6 +189,7 @@ function generateCurl() {
   if(document.getElementById('insight_ip').checked) insights.push('ip');
   if(document.getElementById('insight_os').checked) insights.push('os');
   if(document.getElementById('insight_page').checked) insights.push('page_url');
+  if(document.getElementById('insight_bot').checked) insights.push('bot_detected');
 
   const verify = {};
   const advertiser = document.getElementById('verify_advertiser').value;
