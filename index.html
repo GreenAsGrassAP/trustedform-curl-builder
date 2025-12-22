@@ -64,7 +64,7 @@ input[type="text"], textarea {
 }
 
 textarea {
-  height: 180px;
+  height: 200px;
   font-family: monospace;
   background: #1E293B;
   color: #F8FAFC;
@@ -98,7 +98,7 @@ a {
   <div class="section">
     <h2>Authorization</h2>
     <p class="help">
-      For the username, use <b>API</b> and for the password, use your <b>API key</b>.
+      Use <b>API</b> as the username and your <b>API key</b> as the password.
       This can be found on your
       <a href="https://account.activeprospect.com/settings" target="_blank">ActiveProspect settings page</a>.
     </p>
@@ -107,7 +107,7 @@ a {
   <div class="section">
     <h2>Certificate</h2>
     <p class="help">
-      This is the unique code at the end of the certificate URL:
+      The certificate ID is the unique value at the end of:
       <code>https://cert.trustedform.com/{cert_id}</code>
     </p>
     <label>Certificate ID</label>
@@ -117,7 +117,7 @@ a {
   <div class="section">
     <h2>Match Lead</h2>
     <p class="help">
-      <b>Required to retain:</b> Used to match a certificate to a specific lead by email or phone.
+      <b>Required to retain:</b> Used to match a certificate to a specific lead.
     </p>
     <label>Email</label>
     <input type="text" id="matchEmail" placeholder="janedoe@gmail.com">
@@ -128,7 +128,7 @@ a {
   <div class="section">
     <h2>Insights</h2>
     <p class="help">
-      Select only the insights included in your contract to avoid additional charges.
+      Select only insights included in your contract to avoid additional billing.
     </p>
 
     <div class="checkbox">
@@ -145,27 +145,30 @@ a {
     <div class="checkbox"><input type="checkbox" id="insight_expires"> <label for="insight_expires">Expires At</label></div>
     <div class="checkbox"><input type="checkbox" id="insight_ip"> <label for="insight_ip">IP Address</label></div>
     <div class="checkbox"><input type="checkbox" id="insight_os"> <label for="insight_os">Operating System</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_domain"> <label for="insight_domain">Originating Domain (domain)</label></div>
     <div class="checkbox"><input type="checkbox" id="insight_page"> <label for="insight_page">Page URL</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_parent"> <label for="insight_parent">Parent Page URL (parent_page_url)</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_form_input"> <label for="insight_form_input">Form Input Method (method, kpm, wpm)</label></div>
     <div class="checkbox"><input type="checkbox" id="insight_bot"> <label for="insight_bot">Bot Detected (bot_detected)</label></div>
   </div>
 
   <div class="section">
     <h2>Verify</h2>
     <p class="help">
-      Verify must be configured in the UI to accept leads from a vendor.
+      Verify must be configured in the UI to accept leads from the vendor.
     </p>
     <label>Advertiser Name</label>
-    <input type="text" id="verify_advertiser" placeholder="Acme Inc.">
+    <input type="text" id="verify_advertiser">
     <label>Min Contrast Ratio</label>
-    <input type="text" id="verify_contrast" placeholder="7">
+    <input type="text" id="verify_contrast">
     <label>Min Font Size</label>
-    <input type="text" id="verify_font" placeholder="16">
+    <input type="text" id="verify_font">
   </div>
 
   <div class="section">
     <h2>Retain Metadata</h2>
     <p class="help">
-      Retention occurs only when a match_lead is included.
+      Retention occurs only when match_lead is provided.
     </p>
     <label>Reference</label>
     <input type="text" id="retain_reference">
@@ -182,11 +185,22 @@ a {
 </div>
 
 <script>
-const insightIds = [
-  'insight_age','insight_geo','insight_browser','insight_created',
-  'insight_seconds','insight_expires','insight_ip','insight_os',
-  'insight_page','insight_bot'
-];
+const insightMap = {
+  insight_age: 'age_seconds',
+  insight_geo: 'approx_ip_geo',
+  insight_browser: 'browser',
+  insight_created: 'created_at',
+  insight_seconds: 'seconds_on_page',
+  insight_expires: 'expires_at',
+  insight_ip: 'ip',
+  insight_os: 'os',
+  insight_domain: 'domain',
+  insight_page: 'page_url',
+  insight_parent: 'parent_page_url',
+  insight_bot: 'bot_detected'
+};
+
+const insightIds = Object.keys(insightMap).concat('insight_form_input');
 
 document.getElementById('select_all_insights').addEventListener('change', function () {
   insightIds.forEach(id => document.getElementById(id).checked = this.checked);
@@ -201,25 +215,20 @@ insightIds.forEach(id => {
 
 function generateCurl() {
   const request = {};
+
   const match = {};
   if (matchEmail.value) match.email = matchEmail.value;
   if (matchPhone.value) match.phone = matchPhone.value;
   if (Object.keys(match).length) request.match_lead = match;
 
-  const insights = insightIds
-    .filter(id => document.getElementById(id).checked)
-    .map(id => ({
-      insight_age:'age_seconds',
-      insight_geo:'approx_ip_geo',
-      insight_browser:'browser',
-      insight_created:'created_at',
-      insight_seconds:'seconds_on_page',
-      insight_expires:'expires_at',
-      insight_ip:'ip',
-      insight_os:'os',
-      insight_page:'page_url',
-      insight_bot:'bot_detected'
-    })[0][id]);
+  let insights = [];
+  Object.keys(insightMap).forEach(id => {
+    if (document.getElementById(id).checked) insights.push(insightMap[id]);
+  });
+
+  if (document.getElementById('insight_form_input').checked) {
+    insights.push('form_input_method', 'form_input_kpm', 'form_input_wpm');
+  }
 
   if (insights.length) request.insights = { properties: insights };
 
