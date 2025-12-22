@@ -4,169 +4,177 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TrustedForm Curl Request Builder</title>
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background-color: #60A5FA;
-    color: #1F2937;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-  }
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #60A5FA;
+  color: #1F2937;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
 
-  .container {
-    max-width: 850px;
-    width: 100%;
-  }
+.container {
+  max-width: 850px;
+  width: 100%;
+}
 
-  .section {
-    background-color: #fff;
-    padding: 25px;
-    margin-bottom: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
+.section {
+  background: #fff;
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
-  h2 {
-    color: #2563EB;
-    margin-bottom: 10px;
-  }
+h2 {
+  color: #2563EB;
+  margin-bottom: 10px;
+}
 
-  label {
-    display: block;
-    margin-top: 15px;
-    font-weight: 500;
-  }
+.help {
+  font-size: 0.9em;
+  color: #6B7280;
+  margin-bottom: 12px;
+}
 
-  input[type="text"], textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid #D1D5DB;
-    font-size: 14px;
-  }
+label {
+  display: block;
+  margin-top: 14px;
+  font-weight: 500;
+}
 
-  textarea {
-    height: 180px;
-    font-family: 'Fira Code', monospace;
-    background-color: #1E293B;
-    color: #F8FAFC;
-    border: none;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-  }
+input[type="text"], textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #D1D5DB;
+  font-size: 14px;
+}
 
-  .help {
-    font-size: 0.9em;
-    color: #6B7280;
-    margin-top: -5px;
-    margin-bottom: 10px;
-  }
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
 
-  .checkbox {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
+textarea {
+  height: 180px;
+  font-family: monospace;
+  background: #1E293B;
+  color: #F8FAFC;
+  border: none;
+}
 
-  button {
-    background: #2563EB;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 15px;
-    transition: all 0.2s ease-in-out;
-  }
+button {
+  background: #2563EB;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
 
-  button:hover {
-    background: #1D4ED8;
-    transform: translateY(-2px);
-  }
+button:hover {
+  background: #1D4ED8;
+}
 
-  a {
-    color: #2563EB;
-    text-decoration: none;
-  }
-
-  @media (max-width: 600px) {
-    .section {
-      padding: 20px;
-    }
-    button {
-      width: 100%;
-    }
-  }
+a {
+  color: #2563EB;
+  text-decoration: none;
+}
 </style>
 </head>
-<body>
 
+<body>
 <div class="container">
 
   <div class="section">
     <h2>Authorization</h2>
-    <p class="help">For the username, use <b>API</b> and for password, use your <b>API key</b>. You can find this on your <a href="https://account.activeprospect.com/settings" target="_blank">ActiveProspect settings page</a>.</p>
+    <p class="help">
+      For the username, use <b>API</b> and for the password, use your <b>API key</b>.
+      This can be found on your
+      <a href="https://account.activeprospect.com/settings" target="_blank">ActiveProspect settings page</a>.
+    </p>
   </div>
 
   <div class="section">
     <h2>Certificate</h2>
-    <p class="help">This is the unique code at the end of the certificate URL: <code>https://cert.trustedform.com/{cert_id}</code></p>
+    <p class="help">
+      This is the unique code at the end of the certificate URL:
+      <code>https://cert.trustedform.com/{cert_id}</code>
+    </p>
     <label>Certificate ID</label>
-    <input type="text" id="certId" placeholder="{cert_id}" />
+    <input type="text" id="certId" placeholder="{cert_id}">
   </div>
 
   <div class="section">
     <h2>Match Lead</h2>
-    <p class="help"><b>Required to retain:</b> Enter the email or phone number to match the certificate to a specific lead.</p>
+    <p class="help">
+      <b>Required to retain:</b> Used to match a certificate to a specific lead by email or phone.
+    </p>
     <label>Email</label>
-    <input type="text" id="matchEmail" placeholder="janedoe@gmail.com" />
+    <input type="text" id="matchEmail" placeholder="janedoe@gmail.com">
     <label>Phone</label>
-    <input type="text" id="matchPhone" placeholder="+15555551234" />
+    <input type="text" id="matchPhone" placeholder="+15555551234">
   </div>
 
   <div class="section">
     <h2>Insights</h2>
-    <p class="help">Select the insights you want to request. Only selected properties will be included in the curl request.</p>
-    <div class="checkbox"><input type="checkbox" id="insight_age" /> <label for="insight_age">Age (age_seconds)</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_geo" /> <label for="insight_geo">Geo location (approx_ip_geo)</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_browser" /> <label for="insight_browser">Browser</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_created" /> <label for="insight_created">Created At</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_seconds" /> <label for="insight_seconds">Seconds on Page</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_expires" /> <label for="insight_expires">Expires At</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_ip" /> <label for="insight_ip">IP</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_os" /> <label for="insight_os">Operating System</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_page" /> <label for="insight_page">Page URL</label></div>
-    <div class="checkbox"><input type="checkbox" id="insight_bot" /> <label for="insight_bot">Bot Detected (bot_detected)</label></div>
+    <p class="help">
+      Select only the insights included in your contract to avoid additional charges.
+    </p>
+
+    <div class="checkbox">
+      <input type="checkbox" id="select_all_insights">
+      <label for="select_all_insights"><b>Select all insights</b></label>
+    </div>
+    <hr>
+
+    <div class="checkbox"><input type="checkbox" id="insight_age"> <label for="insight_age">Age (age_seconds)</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_geo"> <label for="insight_geo">Geo location (approx_ip_geo)</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_browser"> <label for="insight_browser">Browser</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_created"> <label for="insight_created">Created At</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_seconds"> <label for="insight_seconds">Seconds on Page</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_expires"> <label for="insight_expires">Expires At</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_ip"> <label for="insight_ip">IP Address</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_os"> <label for="insight_os">Operating System</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_page"> <label for="insight_page">Page URL</label></div>
+    <div class="checkbox"><input type="checkbox" id="insight_bot"> <label for="insight_bot">Bot Detected (bot_detected)</label></div>
   </div>
 
   <div class="section">
     <h2>Verify</h2>
-    <p class="help">Verify must be configured in the UI to accept leads from the vendor. Fill in any fields you want to include.</p>
+    <p class="help">
+      Verify must be configured in the UI to accept leads from a vendor.
+    </p>
     <label>Advertiser Name</label>
-    <input type="text" id="verify_advertiser" placeholder="Acme Inc." />
+    <input type="text" id="verify_advertiser" placeholder="Acme Inc.">
     <label>Min Contrast Ratio</label>
-    <input type="text" id="verify_contrast" placeholder="7" />
+    <input type="text" id="verify_contrast" placeholder="7">
     <label>Min Font Size</label>
-    <input type="text" id="verify_font" placeholder="16" />
+    <input type="text" id="verify_font" placeholder="16">
   </div>
 
   <div class="section">
     <h2>Retain Metadata</h2>
-    <p class="help">Store additional metadata on your certificate. Retention only occurs if a match_lead is provided.</p>
+    <p class="help">
+      Retention occurs only when a match_lead is included.
+    </p>
     <label>Reference</label>
-    <input type="text" id="retain_reference" placeholder="Unique lead ID or URL" />
+    <input type="text" id="retain_reference">
     <label>Vendor</label>
-    <input type="text" id="retain_vendor" placeholder="Acme Co." />
+    <input type="text" id="retain_vendor">
   </div>
 
   <div class="section">
-    <button onclick="generateCurl()">Generate curl Request</button>
+    <button onclick="generateCurl()">Generate curl request</button>
     <h2>Generated curl request</h2>
     <textarea id="curlOutput" readonly></textarea>
   </div>
@@ -174,50 +182,65 @@
 </div>
 
 <script>
-function generateCurl() {
-  const certId = document.getElementById('certId').value;
-  const email = document.getElementById('matchEmail').value;
-  const phone = document.getElementById('matchPhone').value;
+const insightIds = [
+  'insight_age','insight_geo','insight_browser','insight_created',
+  'insight_seconds','insight_expires','insight_ip','insight_os',
+  'insight_page','insight_bot'
+];
 
-  const insights = [];
-  if(document.getElementById('insight_age').checked) insights.push('age_seconds');
-  if(document.getElementById('insight_geo').checked) insights.push('approx_ip_geo');
-  if(document.getElementById('insight_browser').checked) insights.push('browser');
-  if(document.getElementById('insight_created').checked) insights.push('created_at');
-  if(document.getElementById('insight_seconds').checked) insights.push('seconds_on_page');
-  if(document.getElementById('insight_expires').checked) insights.push('expires_at');
-  if(document.getElementById('insight_ip').checked) insights.push('ip');
-  if(document.getElementById('insight_os').checked) insights.push('os');
-  if(document.getElementById('insight_page').checked) insights.push('page_url');
-  if(document.getElementById('insight_bot').checked) insights.push('bot_detected');
+document.getElementById('select_all_insights').addEventListener('change', function () {
+  insightIds.forEach(id => document.getElementById(id).checked = this.checked);
+});
+
+insightIds.forEach(id => {
+  document.getElementById(id).addEventListener('change', () => {
+    document.getElementById('select_all_insights').checked =
+      insightIds.every(i => document.getElementById(i).checked);
+  });
+});
+
+function generateCurl() {
+  const request = {};
+  const match = {};
+  if (matchEmail.value) match.email = matchEmail.value;
+  if (matchPhone.value) match.phone = matchPhone.value;
+  if (Object.keys(match).length) request.match_lead = match;
+
+  const insights = insightIds
+    .filter(id => document.getElementById(id).checked)
+    .map(id => ({
+      insight_age:'age_seconds',
+      insight_geo:'approx_ip_geo',
+      insight_browser:'browser',
+      insight_created:'created_at',
+      insight_seconds:'seconds_on_page',
+      insight_expires:'expires_at',
+      insight_ip:'ip',
+      insight_os:'os',
+      insight_page:'page_url',
+      insight_bot:'bot_detected'
+    })[0][id]);
+
+  if (insights.length) request.insights = { properties: insights };
 
   const verify = {};
-  const advertiser = document.getElementById('verify_advertiser').value;
-  if(advertiser) verify.advertiser_name = advertiser;
-  const contrast = document.getElementById('verify_contrast').value;
-  if(contrast) verify.min_contrast_ratio_required = contrast;
-  const font = document.getElementById('verify_font').value;
-  if(font) verify.min_font_size_px_required = font;
+  if (verify_advertiser.value) verify.advertiser_name = verify_advertiser.value;
+  if (verify_contrast.value) verify.min_contrast_ratio_required = verify_contrast.value;
+  if (verify_font.value) verify.min_font_size_px_required = verify_font.value;
+  if (Object.keys(verify).length) request.verify = verify;
 
   const retain = {};
-  const reference = document.getElementById('retain_reference').value;
-  if(reference) retain.reference = reference;
-  const vendor = document.getElementById('retain_vendor').value;
-  if(vendor) retain.vendor = vendor;
+  if (retain_reference.value) retain.reference = retain_reference.value;
+  if (retain_vendor.value) retain.vendor = retain_vendor.value;
+  if (Object.keys(retain).length) request.retain = retain;
 
-  const matchLead = {};
-  if(email) matchLead.email = email;
-  if(phone) matchLead.phone = phone;
-
-  const requestObj = {};
-  if(Object.keys(matchLead).length) requestObj.match_lead = matchLead;
-  if(Object.keys(retain).length) requestObj.retain = retain;
-  if(insights.length) requestObj.insights = { properties: insights };
-  if(Object.keys(verify).length) requestObj.verify = verify;
-
-  const curl = `curl -i -X POST \\\n  -u <username>:<password> \\\n  'https://cert.trustedform.com/${certId}' \\\n  -H 'Api-Version: 4.0' \\\n  -H 'Content-Type: application/json' \\\n  -d '${JSON.stringify(requestObj, null, 2)}'`;
-
-  document.getElementById('curlOutput').value = curl;
+  curlOutput.value =
+`curl -i -X POST \\
+  -u <username>:<password> \\
+  'https://cert.trustedform.com/${certId.value}' \\
+  -H 'Api-Version: 4.0' \\
+  -H 'Content-Type: application/json' \\
+  -d '${JSON.stringify(request, null, 2)}'`;
 }
 </script>
 
